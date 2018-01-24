@@ -1,0 +1,14 @@
+{
+  "name": "kittystore",
+  "version": "1.0.0",
+  "description": "A simple shopping cart approach",
+  "scripts": {
+    "start": "node_modules/.bin/parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vampaynani @ Laboratoria",
+  "license": "ISC",
+  "dependencies": {
+    "parcel-bundler": "^1.4.1"
+  }
+}

@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
+* {
+  font-family: 'PT Sans', sans-serif;
+}
+body {
+  margin: 0;
+}
+nav {
+  background: #eee;
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+nav div {
+  position: relative;
+}
+nav .btn {
+  display: block;
+  padding: 5px 15px;
+  text-decoration: none;
+  text-align: right;
+  color: #3cc;
+  background-color: #eee;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+nav .btn:hover {
+  color: #fff;
+  background-color: #3cc;
+}
+nav .js-shopping-cart {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 200px;
+  right: 0;
+}
+nav .js-shopping-cart li {
+  color: #fff;
+  background: #3cc;
+  text-align: right;
+  padding: 5px 30px;
+  border-bottom: 1px solid #fff;
+}
+nav .js-shopping-cart .js-btn-buy {
+  background-color: transparent;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-align: center;
+}
+nav .js-shopping-cart .js-btn-buy:hover {
+  background-color: #fff;
+  color: #3cc;
+}
+.gallery h1 {
+  text-align: center;
+}
+.gallery ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.gallery ul li {
+  flex: 0 25%;
+  text-align: center;
+}
+.gallery ul li img {
+  cursor: pointer;
+}
+.hidden {
+  display: none !important;
+}
