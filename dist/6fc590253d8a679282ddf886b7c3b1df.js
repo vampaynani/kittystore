@@ -123,8 +123,8 @@ var kitties = [
 
 var order = [];
 
-function render(){
-  for(var i = 0; i < kitties.length; i++){
+function render() {
+  for (var i = 0; i < kitties.length; i++) {
     var kitty = kitties[i];
     $('.js-gallery-list').append(`
     <li class="kitty ${kitty.id}">
@@ -136,24 +136,37 @@ function render(){
   }
 }
 
-function initListeners(){
-  $('.js-gallery-list').on('click', '.kitty', function(){
+function initListeners() {
+  $('.js-gallery-list').on('click', '.kitty', function () {
     var id = $(this).attr('class').split(' ')[1];
     console.log(id);
   });
-  $('.js-btn-cart').on('click', function(){
+  $('.js-btn-cart').on('click', function () {
     $('.js-btn-close').removeClass('hidden');
     $('.js-shopping-cart').removeClass('hidden');
     $('.js-btn-cart').addClass('hidden');
   });
-  $('.js-btn-close').on('click', function(){
+  $('.js-btn-close').on('click', function () {
     $('.js-btn-cart').removeClass('hidden');
     $('.js-shopping-cart').addClass('hidden');
     $('.js-btn-close').addClass('hidden');
   });
+  $('.js-btn-buy').on('click', function () {
+    $('.modal').removeClass('hidden');
+    $('.js-btn-cart').removeClass('hidden');
+    $('.js-shopping-cart').addClass('hidden');
+    $('.js-btn-close').addClass('hidden');
+  });
+  $('.js-btn-modal-close').on('click', function(e){
+    e.preventDefault();
+    $('.modal').addClass('hidden');
+  });
+  $('.js-btn-checkout').on('click', function (e){
+    console.log('checkout');
+  });
 }
 
-$(function(){
+$(function () {
   render();
   initListeners();
 });
@@ -175,7 +188,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
-  var ws = new WebSocket('ws://' + window.location.hostname + ':64680/');
+  var ws = new WebSocket('ws://' + window.location.hostname + ':61066/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 

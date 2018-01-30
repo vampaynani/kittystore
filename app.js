@@ -79,6 +79,19 @@ function initListeners() {
     $('.js-shopping-cart').addClass('hidden');
     $('.js-btn-close').addClass('hidden');
   });
+  $('.js-btn-buy').on('click', function () {
+    $('.modal').removeClass('hidden');
+    $('.js-btn-cart').removeClass('hidden');
+    $('.js-shopping-cart').addClass('hidden');
+    $('.js-btn-close').addClass('hidden');
+  });
+  $('.js-btn-modal-close').on('click', function(e){
+    e.preventDefault();
+    $('.modal').addClass('hidden');
+  });
+  $('.js-btn-checkout').on('click', function (e){
+    console.log('checkout');
+  });
 }
 
 $(function () {

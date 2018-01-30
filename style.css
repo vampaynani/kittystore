@@ -72,6 +72,83 @@ nav .js-shopping-cart .js-btn-buy:hover {
 .gallery ul li img {
   cursor: pointer;
 }
+.modal {
+  background: rgba(0,0,0,0.75);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.modal .content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+  height: 30%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+.modal .content .js-btn-modal-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #999;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.modal .content .js-btn-modal-close:hover {
+  color: #333;
+}
+.modal .content ul {
+  list-style-type: none;
+  padding: 0;
+}
+.modal .content ul li {
+  border-bottom: 1px solid #ccc;
+  padding: 5px 10px;
+}
+.modal .content footer {
+  position: absolute;
+  bottom: 0;
+  padding: 15px;
+  justify-content: flex-end;
+  display: flex;
+  width: 100%;
+  left: 0;
+  box-sizing: border-box;
+}
+.modal .content footer {
+  position: absolute;
+  bottom: 0;
+  padding: 15px;
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  left: 0;
+  box-sizing: border-box;
+}
+.modal .content .js-btn-checkout{
+  background-color: transparent;
+  border-radius: 10px;
+  border: 1px solid #3cc;
+  color: #333;
+  text-align: center;
+  text-decoration: none;
+  padding: 5px 10px;
+  margin: 0 10px;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+.modal .content .js-btn-checkout:hover{
+  background-color: #333;
+  color: #3cc;
+}
+
 .hidden {
   display: none !important;
 }
