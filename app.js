@@ -1,4 +1,4 @@
-var kitties = [
+let kitties = [
   {
     id: 'ky-0',
     name: 'Kitty 1',
@@ -63,16 +63,56 @@ function render() {
     `);
   }
 }
-
+function attrKitties(){
+  for(var i of kitties){
+    i.clicks = 0;
+    i.cart = 0;
+  }
+  console.log(kitties);
+}
+function contarElementos(kittieData){
+  kittieData.clicks += 1;
+}
+function obtenerDatos (kittieId){
+  let kittieIndex = kittieId.split('-')[1];
+  let kittieData = kitties[kittieIndex];
+  return kittieData;
+}
+function calcularPrecio(kittie){
+  kittie.cart = kittie.price * kittie.clicks;
+  // console.log(kittie.cart);
+} 
 function initListeners() {
   $('.js-gallery-list').on('click', '.kitty', function () {
     var id = $(this).attr('class').split(' ')[1];
     console.log(id);
+    //Con cada click sobre un gatito, se deben obtener sus datos[x]
+    //Primero del html, después de la BD kitties. [x]
+    //Cuando se tengan estos datos, se debe calcular el precio gatitoxcantidad[x]
+    var selectedKittie = obtenerDatos(id);
+    contarElementos(selectedKittie);
+    calcularPrecio(selectedKittie);
   });
   $('.js-btn-cart').on('click', function () {
     $('.js-btn-close').removeClass('hidden');
     $('.js-shopping-cart').removeClass('hidden');
     $('.js-btn-cart').addClass('hidden');
+    //Crear un elemento de la lista carrito de compras
+    //con el numero de elementos seleccionados, con su precio. 
+    /*
+    <li>
+        `<span>${cantidadElementos} x ${kittieName}</span>`
+        <span>${kittiePrice * cantidadElementos}</span>
+    </li>
+    */
+    // mostrarCantidadPrecio();
+    /* 
+        <span>
+          <strong>Total</strong>
+        </span>
+        `<span id='totalSC'>${totalKittiePrice}</span>`
+    */
+    // mostrarTotal();
   });
   $('.js-btn-close').on('click', function () {
     $('.js-btn-cart').removeClass('hidden');
@@ -81,7 +121,9 @@ function initListeners() {
   });
 }
 
+
 $(function () {
+  attrKitties();
   render();
   initListeners();
 });

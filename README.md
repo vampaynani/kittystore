@@ -5,6 +5,24 @@
 ## Tareas
 ### Procedimientos
 Evaluar si el código actual cumple con los estándares básicos de programación por procedimientos: ¿Es claro, legible y tiene funciones que se dedican a procesos específicos?
+#### Aproximación 1: 
+- [ ] Con cada click sobre un gatito, se deben obtener sus datos 
+- [ ] Primero del html, después de la BD kitties. 
+- [ ] Cuando se tengan estos datos, se debe calcular el precio gatito *  cantidad 
+- [ ]Crear un elemento de la lista carrito de compras con el numero de elementos seleccionados, con su precio. 
+- [ ] Mostrar el total $$$
+    ````javascript
+        agregarAtributos();
+        //se hace click
+        obtenerData();
+        contarElementos();
+        calcularPrecio();
+        // se abre el carrito
+        crearElementosCarrito();
+        //calcular total 
+        calcularPrecioTotal();
+        renderCarrito();
+    ````
 
 ### OOP
 * Añadir un objeto _Cart_ que te permita agregar, quitar o modificar los objetos seleccionados por el usuario.
