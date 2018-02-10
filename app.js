@@ -49,7 +49,7 @@ var kitties = [
   }
 ];
 
-var order = [];
+// var order = [];
 
 function render() {
   for (var i = 0; i < kitties.length; i++) {
@@ -65,20 +65,26 @@ function render() {
 }
 
 function initListeners() {
-  $('.js-gallery-list').on('click', '.kitty', function () {
-    var id = $(this).attr('class').split(' ')[1];
-    console.log(id);
-  });
-  $('.js-btn-cart').on('click', function () {
-    $('.js-btn-close').removeClass('hidden');
-    $('.js-shopping-cart').removeClass('hidden');
-    $('.js-btn-cart').addClass('hidden');
-  });
-  $('.js-btn-close').on('click', function () {
-    $('.js-btn-cart').removeClass('hidden');
-    $('.js-shopping-cart').addClass('hidden');
-    $('.js-btn-close').addClass('hidden');
-  });
+  $('.js-gallery-list').on('click', '.kitty', getId);
+  $('.js-btn-cart').on('click', openModal);
+  $('.js-btn-close').on('click', closeModal);
+}
+
+function getId() {
+  var id = $(this).attr('class').split(' ')[1];
+  console.log(id);
+}
+
+function openModal() {
+  $('.js-btn-close').removeClass('hidden');
+  $('.js-shopping-cart').removeClass('hidden');
+  $('.js-btn-cart').addClass('hidden');
+}
+
+function closeModal() {
+  $('.js-btn-cart').removeClass('hidden');
+  $('.js-shopping-cart').addClass('hidden');
+  $('.js-btn-close').addClass('hidden');
 }
 
 $(function () {
