@@ -64,30 +64,11 @@ function render() {
   }
 }
 
-/*function showListKitties(id){
-  $('.js-shopping-cart').append(`
-      <li>
-          <span>1 x ${kitty.name}</span>
-          <span>${kitty.price}</span>
-        </li>
-        <li>
-          <span>
-            <strong>Total</strong>
-          </span>
-          <span>$100</span>
-        </li>
-    `)
-}*/
-
-function getIdKitties() {
+function initListeners() {
   $('.js-gallery-list').on('click', '.kitty', function () {
     var id = $(this).attr('class').split(' ')[1];
-    showListKitties(id);
+    console.log(id);
   });
-
-}
-function initListeners() {
-  getIdKitties();
   $('.js-btn-cart').on('click', function () {
     $('.js-btn-close').removeClass('hidden');
     $('.js-shopping-cart').removeClass('hidden');
