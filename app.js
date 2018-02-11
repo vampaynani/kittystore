@@ -64,11 +64,14 @@ function render() {
   }
 }
 
-/*function showListKitties(id){
+function showListKitties(id, kitties){
+  let index = id.substring(3);
+  let itemSelect = kitties[index];
+
   $('.js-shopping-cart').append(`
       <li>
-          <span>1 x ${kitty.name}</span>
-          <span>${kitty.price}</span>
+          <span>1 x ${itemSelect.name}</span>
+          <span>${itemSelect.price}</span>
         </li>
         <li>
           <span>
@@ -77,14 +80,13 @@ function render() {
           <span>$100</span>
         </li>
     `)
-}*/
+}
 
 function getIdKitties() {
   $('.js-gallery-list').on('click', '.kitty', function () {
-    var id = $(this).attr('class').split(' ')[1];
-    showListKitties(id);
+    var id = $(this).attr('class').split(' ')[1];  
+    showListKitties(id,kitties);
   });
-
 }
 function initListeners() {
   getIdKitties();
