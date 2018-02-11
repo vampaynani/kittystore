@@ -64,33 +64,11 @@ function render() {
   }
 }
 
-
-function showListKitties(id, kitties){
-  let contador = 0;
-  contador++;
-  console.log(contador);
-  let index = id.substring(3);
-  let itemSelect = kitties[index];
-  if(contador === 1){
-    $('.js-shopping-cart').append(`
-      <li>
-          <span>1 x ${itemSelect.name}</span>
-          <span> = $ ${itemSelect.price}</span>
-        </li>
-    `)
-  }
-  
-}
-
-
-function getIdKitties() {
-  $('.js-gallery-list').on('click', '.kitty', function () {
-    var id = $(this).attr('class').split(' ')[1];  
-    showListKitties(id,kitties);
-  });
-}
 function initListeners() {
-  getIdKitties();
+  $('.js-gallery-list').on('click', '.kitty', function () {
+    var id = $(this).attr('class').split(' ')[1];
+    console.log(id);
+  });
   $('.js-btn-cart').on('click', function () {
     $('.js-btn-close').removeClass('hidden');
     $('.js-shopping-cart').removeClass('hidden');
