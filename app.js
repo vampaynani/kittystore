@@ -64,23 +64,24 @@ function render() {
   }
 }
 
+
 function showListKitties(id, kitties){
+  let contador = 0;
+  contador++;
+  console.log(contador);
   let index = id.substring(3);
   let itemSelect = kitties[index];
-
-  $('.js-shopping-cart').append(`
+  if(contador === 1){
+    $('.js-shopping-cart').append(`
       <li>
           <span>1 x ${itemSelect.name}</span>
-          <span>${itemSelect.price}</span>
-        </li>
-        <li>
-          <span>
-            <strong>Total</strong>
-          </span>
-          <span>$100</span>
+          <span> = $ ${itemSelect.price}</span>
         </li>
     `)
+  }
+  
 }
+
 
 function getIdKitties() {
   $('.js-gallery-list').on('click', '.kitty', function () {
