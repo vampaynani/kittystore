@@ -1,4 +1,4 @@
-let kitties = [
+var kitties = [
   {
     id: 'ky-0',
     name: 'Kitty 1',
@@ -48,9 +48,14 @@ let kitties = [
     price: 250
   }
 ];
-
+var kittyClickCounter=0;
 var order = [];
-
+function addProperties (){
+  kitties.map(function(kittie){
+    kittie['count'] = 0;
+    kittie['priceCount']=0;
+  });
+}
 function render() {
   for (var i = 0; i < kitties.length; i++) {
     var kitty = kitties[i];
@@ -63,70 +68,74 @@ function render() {
     `);
   }
 }
-function attrKitties(){
-  for(var i of kitties){
-    i.clicks = 0;
-    i.cart = 0;
+function dataObtainer(id){
+  var kittie = kitties.filter(function(k){
+    return k.id === id;
+  });
+  //Esto filtra al gatito por id
+  var kittieAdded = order.filter(function(ko){
+    return ko.id == id;
+  });
+  // Esto verifica que el gatito está o no está ordenado.
+
+  if(kittieAdded.length >= 1){
+    //Si ya existe el gatito en order, se aumenta la propiedad count del gatito existente
+    order.map(function(ko){
+      if(ko.id === kittie[0].id){
+        kittie[0].count +=1
+      }
+    });
+  }else{
+    //Si es la primera vez que se selecciona un gatito entonces se agrega al carrito
+    order.push(kittie[0]);
   }
-  console.log(kitties);
+};
+function renderCart (orden){
+  var total = 0;
+  for(var i = 0; i < orden.length;i++){
+    orden[i].priceCount = (orden[i].count+1) * orden[i].price;
+    total += orden[i].priceCount;
+      var cartItem = `<li>
+        <p>${orden[i].count + 1} x ${orden[i].name}</p>
+        <p>${orden[i].priceCount}</p>
+      </li>`;
+      $('.kittyContainer').prepend(cartItem);
+      $('#totalSC').html(total);
+
+  };
 }
-function contarElementos(kittieData){
-  kittieData.clicks += 1;
+function cartCleaner(){
+  $('.kittyContainer').html(' ');
+  $('#totalSC').html(' ');
 }
-function guardarItems (item){
-  if
-}
-function obtenerDatos (item){
-  let itemId = item.split('-')[1];
-  let kittieData = kitties[itemId];
-  return kittieData;
-}
-function calcularPrecio(kittie){
-  kittie.cart = kittie.price * kittie.clicks;
-  // console.log(kittie.cart);
-} 
+
 function initListeners() {
   $('.js-gallery-list').on('click', '.kitty', function () {
     var id = $(this).attr('class').split(' ')[1];
-    console.log(id);
-    //Con cada click sobre un gatito, se deben obtener sus datos[x]
-    //Primero del html, después de la BD kitties. [x]
-    //Cuando se tengan estos datos, se debe calcular el precio gatitoxcantidad[x]
-    var selectedKittie = obtenerDatos(id);
-    contarElementos(selectedKittie);
-    calcularPrecio(selectedKittie);
+    dataObtainer(id);
   });
   $('.js-btn-cart').on('click', function () {
     $('.js-btn-close').removeClass('hidden');
     $('.js-shopping-cart').removeClass('hidden');
     $('.js-btn-cart').addClass('hidden');
-    //Crear un elemento de la lista carrito de compras
-    //con el numero de elementos seleccionados, con su precio. 
-    /*
-    <li>
-        `<span>${cantidadElementos} x ${kittieName}</span>`
-        <span>${kittiePrice * cantidadElementos}</span>
-    </li>
-    */
-    // mostrarCantidadPrecio();
-    /* 
-        <span>
-          <strong>Total</strong>
-        </span>
-        `<span id='totalSC'>${totalKittiePrice}</span>`
-    */
-    // mostrarTotal();
   });
   $('.js-btn-close').on('click', function () {
     $('.js-btn-cart').removeClass('hidden');
     $('.js-shopping-cart').addClass('hidden');
     $('.js-btn-close').addClass('hidden');
+    cartCleaner();
+  });
+  $('#shopping-cart').on('click',function(){
+    renderCart(order);
+  });
+  $('.kitty').on('click',function(){
+    kittyClickCounter += 1;
+    $('.itemsCounter').html(`${kittyClickCounter}`);
   });
 }
 
-
 $(function () {
-  attrKitties();
   render();
   initListeners();
+  addProperties();
 });
