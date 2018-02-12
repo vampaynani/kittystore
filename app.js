@@ -73,9 +73,12 @@ function attrKitties(){
 function contarElementos(kittieData){
   kittieData.clicks += 1;
 }
-function obtenerDatos (kittieId){
-  let kittieIndex = kittieId.split('-')[1];
-  let kittieData = kitties[kittieIndex];
+function guardarItems (item){
+  if
+}
+function obtenerDatos (item){
+  let itemId = item.split('-')[1];
+  let kittieData = kitties[itemId];
   return kittieData;
 }
 function calcularPrecio(kittie){
