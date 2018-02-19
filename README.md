@@ -38,6 +38,42 @@ Evaluar si el código actual cumple con los estándares básicos de programació
 * Evaluar si los listeners y las modificaciones al DOM merecen ser parte de un objeto. De ser así implementarlo con sus respectivos métodos y propiedades.
 * Evaluar si cada uno de los productos merece ser convertido en un objeto, si es así deberíamos usar un factory? Herencia prototipal o quizás hacer una composicion?
 
+```javascript
+const Cart =  () => {
+     let order = [];
+     return {
+               this.addItem: function(gatito){
+                         if(gatito existe en this.order){
+
+                        gatito.cantidad += 1;
+                        gatito.precioTotal = gatito.price * gatito.cantidad;
+
+                         }else{
+                        this.order.push({gatito + estas propiedades
+                        gatito.cantidad,gatito.precioTotal}
+                        }
+               },
+               this.removeItem: function(gatito){
+
+                         if(gatito existe en this.order){
+
+               gatito.cantidad -= 1;
+               gatito.precioTotal -= (gatito.price * gatito.cantidad);
+
+
+                         }else{
+                        this.order.push({gatito + estas propiedades
+                        gatito.cantidad,gatito.precioTotal}
+                        }
+               },
+               this.printCart: function(){}
+          }
+}
+
+var carrito = new Cart();
+carrito.addItem(gatito) //Guardar el item en el carrito, en la orden.
+```
+
 ### Programación Funcional
 * De los métodos antes desarrollados, ¿cuál de ellos podría tener una aproximación funcional? Recuerda que esta aproximación debe tomar en cuenta inmutabilidad, funciones puras y predecibles.
 * ¿Podríamos y/o deberíamos modificar todos nuestros objetos para implementar solamente FP?
