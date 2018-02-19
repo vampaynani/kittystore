@@ -96,6 +96,7 @@ function renderCart (orden){
     orden[i].priceCount = (orden[i].count+1) * orden[i].price;
     total += orden[i].priceCount;
       var cartItem = `<li>
+        <span class ='close addedItem' data-id = '${orden[i].id}'>&times</span>
         <p>${orden[i].count + 1} x ${orden[i].name}</p>
         <p>${orden[i].priceCount}</p>
       </li>`;
@@ -108,7 +109,17 @@ function cartCleaner(){
   $('.kittyContainer').html(' ');
   $('#totalSC').html(' ');
 }
-
+function removeItem (e){
+  console.log(order);
+  var deleteId = ($(e.target).data('id'));
+  var newOrder = order.filter(function(o){
+    return o.id !== deleteId
+  });
+  order = newOrder;
+  console.log(order);
+  cartCleaner();
+  renderCart(order);
+}
 function initListeners() {
   $('.js-gallery-list').on('click', '.kitty', function () {
     var id = $(this).attr('class').split(' ')[1];
@@ -131,6 +142,9 @@ function initListeners() {
   $('.kitty').on('click',function(){
     kittyClickCounter += 1;
     $('.itemsCounter').html(`${kittyClickCounter}`);
+  });
+  $(document).on('click','.close',function(event){
+    removeItem(event);
   });
 }
 
