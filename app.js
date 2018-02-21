@@ -48,9 +48,13 @@ var kitties = [
     price: 250
   }
 ];
-
 var order = [];
-
+function addProperties (){
+  kitties.map(function(kittie){
+    kittie['count'] = 0;
+    kittie['priceCount']=0;
+  });
+}
 function render() {
   for (var i = 0; i < kitties.length; i++) {
     var kitty = kitties[i];
@@ -63,11 +67,66 @@ function render() {
     `);
   }
 }
+function dataObtainer(id){
+  var kittie = kitties.filter(function(k){
+    return k.id === id;
+  });
+  //Esto filtra al gatito por id
+  var kittieAdded = order.filter(function(ko){
+    return ko.id == id;
+  });
+  // Esto verifica que el gatito está o no está ordenado.
 
+  if(kittieAdded.length >= 1){
+    //Si ya existe el gatito en order, se aumenta la propiedad count del gatito existente
+    order.map(function(ko){
+      if(ko.id === kittie[0].id){
+        kittie[0].count +=1
+      }
+    });
+  }else{
+    //Si es la primera vez que se selecciona un gatito entonces se agrega al carrito
+    order.push(kittie[0]);
+  }
+};
+function renderCart (orden){
+  var total = 0;
+  for(var i = 0; i < orden.length;i++){
+    orden[i].priceCount = (orden[i].count+1) * orden[i].price;
+    total += orden[i].priceCount;
+      var cartItem = `<li>
+        <span class ='close addedItem' data-id = '${orden[i].id}'>&times</span>
+        <p>${orden[i].count + 1} x ${orden[i].name}</p>
+        <p>${orden[i].priceCount}</p>
+      </li>`;
+      $('.kittyContainer').prepend(cartItem);
+      $('#totalSC').html(total);
+
+  };
+}
+function cartCleaner(){
+  $('.kittyContainer').html(' ');
+  $('#totalSC').html(' ');
+}
+function removeItem (e){
+  console.log(order);
+  var deleteId = ($(e.target).data('id'));
+  var newOrder = order.filter(function(o){
+    return o.id !== deleteId
+  });
+  order = newOrder;
+  cartCleaner();
+  renderCart(order);
+  itemsCounter();
+}
+function itemsCounter (){
+  var kittyClickCounter = order.length;
+  $('.itemsCounter').html(`${kittyClickCounter}`);
+}
 function initListeners() {
   $('.js-gallery-list').on('click', '.kitty', function () {
     var id = $(this).attr('class').split(' ')[1];
-    console.log(id);
+    dataObtainer(id);
   });
   $('.js-btn-cart').on('click', function () {
     $('.js-btn-close').removeClass('hidden');
@@ -78,10 +137,21 @@ function initListeners() {
     $('.js-btn-cart').removeClass('hidden');
     $('.js-shopping-cart').addClass('hidden');
     $('.js-btn-close').addClass('hidden');
+    cartCleaner();
+  });
+  $('#shopping-cart').on('click',function(){
+    renderCart(order);
+  });
+  $('.kitty').on('click',function(){
+    itemsCounter();
+  });
+  $(document).on('click','.close',function(event){
+    removeItem(event);
   });
 }
 
 $(function () {
   render();
   initListeners();
+  addProperties();
 });

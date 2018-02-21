@@ -5,6 +5,32 @@
 ## Tareas
 ### Procedimientos
 Evaluar si el código actual cumple con los estándares básicos de programación por procedimientos: ¿Es claro, legible y tiene funciones que se dedican a procesos específicos?
+#### Aproximación 1:
+- Identificar que proceso debe llevarse a través de que trigger.
+  - Cuando se clickea sobre un gatito:
+    - a) Obtener sus datos a través del filtrado en la BD por el ID. 
+    - b) Si ya se ha seleccionado este gato antes, solo se aumenta el contador de elementos comprados del gato en la lista de orden.
+  - Cuando se abre el carrito de compras:
+    - a) Obtener todos los elementos que encuentran en la lista de compras.
+    - b) Calcular para cada gato el precio actual con respecto a los items seleccionados.
+    - c) Calcular la suma total
+    - d) Imprimir la cantidad de items seleccionados así como la suma total de los gatos comprados. 
+  - Al cerrar el carrito de compras:
+    - a) borrar los elementos de la lista en el  html para que no se sobre escriban.
+  - 
+    ````javascript
+        agregarAtributos();
+        //se hace click
+        obtenerData();
+        existeUnaOrdenPrevia();
+        guardarItemsEnLaOrden();
+        // se abre el carrito
+        crearElementosCarrito();
+        calcularPrecio();
+        //calcular total
+        calcularPrecioTotal();
+        renderCarrito();
+    ````
 
 ### OOP
 * Añadir un objeto _Cart_ que te permita agregar, quitar o modificar los objetos seleccionados por el usuario.
