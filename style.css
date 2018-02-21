@@ -43,6 +43,10 @@ nav .js-shopping-cart li {
   padding: 5px 30px;
   border-bottom: 1px solid #fff;
 }
+nav .js-shopping-cart a {
+  color: #fff;
+  text-decoration: none;
+}
 nav .js-shopping-cart .js-btn-buy {
   background-color: transparent;
   border-radius: 10px;

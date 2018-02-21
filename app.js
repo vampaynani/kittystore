@@ -48,53 +48,143 @@ var kitties = [
     price: 250
   }
 ];
+var order = {};
 
-var order = [];
-
-function render() {
-  for (var i = 0; i < kitties.length; i++) {
-    var kitty = kitties[i];
-    $('.js-gallery-list').append(`
-    <li class="kitty ${kitty.id}">
-      <h3 class="title">${kitty.name}</h3>
-      <img src="https://www.cryptokitties.co/images/${kitty.thumbnail}"/>
-      <p>$${kitty.price}</p>
-    </li>
-    `);
+function renderItems(items) {
+  var renderedItems = [];
+  for (var i = 0; i < items.length; i++) {
+    renderedItems.push(renderKittyItem(items[i]));
   }
+  $('.js-gallery-list').html(renderedItems.join(''));
+}
+
+function renderKittyItem(item){
+  return `
+  <li class="kitty ${item.id}">
+    <h3 class="title">${item.name}</h3>
+    <img src="https://www.cryptokitties.co/images/${item.thumbnail}"/>
+    <p>$${item.price}</p>
+  </li>
+  `;
+}
+
+function addKittyToOrder() {
+  var id = $(this).attr('class').split(' ')[1];
+  addToShoppingCart(id);
+}
+
+function removeKittyFromOrder(){
+  var id = $(this).attr('class').split(' ')[1];
+  removeFromShoppingCart(id);
+}
+
+function removeFromShoppingCart(id){
+  order[id] -= 1;
+  if(order[id] <= 0){
+    delete order[id];
+  }
+  renderShoppingCartItems();
+}
+
+function addToShoppingCart(id){ 
+  if(!order[id]){
+    order[id] = 1;
+  }else{
+    order[id] += 1;
+  }
+  renderShoppingCartItems();
+}
+
+function showShoppingCart() {
+  renderShoppingCartItems();
+  $('.js-btn-close').removeClass('hidden');
+  $('.js-shopping-cart').removeClass('hidden');
+  $('.js-btn-cart').addClass('hidden');
+}
+
+function renderShoppingCartItems(){
+  var items = [];
+  for(var key in order){
+    var item = renderCartItem(order, key);
+    items.push(item);
+  }
+  items.push(renderCartTotal(order));
+  items.push(renderCartButton());
+  $('.js-shopping-cart').html(items.join(''));
+}
+
+function renderCartTotal(order){
+  var total = 0;
+  for(var key in order){
+    var kitty = getSelectedKitty(key);
+    total += order[key] * kitty.price;
+  }
+  return `<li>
+    <span>
+      <strong>Total</strong>
+    </span>
+    <span>$${total}</span>
+  </li>`;
+}
+
+function renderCartButton(){
+  return `<li>
+    <a class="btn js-btn-buy" href="#">Buy!</a>
+  </li>`;
+}
+
+function renderCartItem(order, key){
+  var selected = getSelectedKitty(key);
+  if(!selected) return;
+  return `<li>
+    <span>${order[key]} x ${selected.name}</span>
+    <span>$${selected.price}</span>
+    <a href="#" class="js-btn-delete ${selected.id}">[ - ]</a>
+  </li>`;
+}
+
+function getSelectedKitty(key){
+  for(var i = 0; i < kitties.length; i++){
+    if(kitties[i].id === key){
+      return kitties[i];
+    }
+  }
+  return;
+}
+
+function hideShoppingCart() {
+  $('.js-btn-cart').removeClass('hidden');
+  $('.js-shopping-cart').addClass('hidden');
+  $('.js-btn-close').addClass('hidden');
+}
+
+function showBuyModal() {
+  $('.modal').removeClass('hidden');
+  $('.js-btn-cart').removeClass('hidden');
+  $('.js-shopping-cart').addClass('hidden');
+  $('.js-btn-close').addClass('hidden');
+}
+
+function closeBuyModal(e){
+  e.preventDefault();
+  $('.modal').addClass('hidden');
+}
+
+function checkoutOrder(e){
+  console.log('checkout');
 }
 
 function initListeners() {
-  $('.js-gallery-list').on('click', '.kitty', function () {
-    var id = $(this).attr('class').split(' ')[1];
-    console.log(id);
-  });
-  $('.js-btn-cart').on('click', function () {
-    $('.js-btn-close').removeClass('hidden');
-    $('.js-shopping-cart').removeClass('hidden');
-    $('.js-btn-cart').addClass('hidden');
-  });
-  $('.js-btn-close').on('click', function () {
-    $('.js-btn-cart').removeClass('hidden');
-    $('.js-shopping-cart').addClass('hidden');
-    $('.js-btn-close').addClass('hidden');
-  });
-  $('.js-btn-buy').on('click', function () {
-    $('.modal').removeClass('hidden');
-    $('.js-btn-cart').removeClass('hidden');
-    $('.js-shopping-cart').addClass('hidden');
-    $('.js-btn-close').addClass('hidden');
-  });
-  $('.js-btn-modal-close').on('click', function(e){
-    e.preventDefault();
-    $('.modal').addClass('hidden');
-  });
-  $('.js-btn-checkout').on('click', function (e){
-    console.log('checkout');
-  });
+  $('.js-gallery-list').on('click', '.kitty', addKittyToOrder);
+  $('.js-btn-cart').on('click', showShoppingCart);
+  $('.js-btn-close').on('click', hideShoppingCart);
+  $('.js-shopping-cart').on('click', '.js-btn-buy', showBuyModal);
+  $('.js-shopping-cart').on('click', '.js-btn-delete', removeKittyFromOrder);
+  $('.js-btn-modal-close').on('click', closeBuyModal);
+  $('.js-btn-checkout').on('click', checkoutOrder);
 }
 
 $(function () {
-  render();
+  renderItems(kitties);
   initListeners();
 });
