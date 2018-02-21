@@ -43,30 +43,23 @@ const Cart =  () => {
      let order = [];
      return {
                this.addItem: function(gatito){
-                         if(gatito existe en this.order){
+                if(gatito existe en this.order){
+                  gatito.cantidad += 1;
+                  gatito.precioTotal = gatito.price * gatito.cantidad;
 
-                        gatito.cantidad += 1;
-                        gatito.precioTotal = gatito.price * gatito.cantidad;
-
-                         }else{
-                        this.order.push({gatito + estas propiedades
-                        gatito.cantidad,gatito.precioTotal}
-                        }
+                    }else{
+                  this.order.push({gatito + estas propiedades
+                  gatito.cantidad,gatito.precioTotal}
+                  }
                },
-               this.removeItem: function(gatito){
+              this.removeItem: function(gatito){
 
-                         if(gatito existe en this.order){
-
+              if(gatito existe en this.order){
                gatito.cantidad -= 1;
                gatito.precioTotal -= (gatito.price * gatito.cantidad);
-
-
-                         }else{
-                        this.order.push({gatito + estas propiedades
-                        gatito.cantidad,gatito.precioTotal}
-                        }
-               },
-               this.printCart: function(){}
+              }
+              },
+              this.printCart: function(){}
           }
 }
 

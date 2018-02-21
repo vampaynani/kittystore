@@ -50,6 +50,7 @@ var kitties = [
 ];
 var kittyClickCounter=0;
 var order = [];
+
 function addProperties (){
   kitties.map(function(kittie){
     kittie['count'] = 0;
