@@ -61,10 +61,7 @@ const Cart =  () => {
                gatito.precioTotal -= (gatito.price * gatito.cantidad);
 
 
-                         }else{
-                        this.order.push({gatito + estas propiedades
-                        gatito.cantidad,gatito.precioTotal}
-                        }
+                         }
                },
                this.printCart: function(){}
           }
