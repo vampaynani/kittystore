@@ -48,7 +48,6 @@ var kitties = [
     price: 250
   }
 ];
-var kittyClickCounter=0;
 var order = [];
 function addProperties (){
   kitties.map(function(kittie){
@@ -116,9 +115,13 @@ function removeItem (e){
     return o.id !== deleteId
   });
   order = newOrder;
-  console.log(order);
   cartCleaner();
   renderCart(order);
+  itemsCounter();
+}
+function itemsCounter (){
+  var kittyClickCounter = order.length;
+  $('.itemsCounter').html(`${kittyClickCounter}`);
 }
 function initListeners() {
   $('.js-gallery-list').on('click', '.kitty', function () {
@@ -140,8 +143,7 @@ function initListeners() {
     renderCart(order);
   });
   $('.kitty').on('click',function(){
-    kittyClickCounter += 1;
-    $('.itemsCounter').html(`${kittyClickCounter}`);
+    itemsCounter();
   });
   $(document).on('click','.close',function(event){
     removeItem(event);
