@@ -87,6 +87,7 @@ function removeFromShoppingCart(id){
 }
 
 function addToShoppingCart(id){ 
+  alert('Add Kitty');
   if(!order[id]){
     order[id] = 1;
   }else{
@@ -159,10 +160,40 @@ function hideShoppingCart() {
 }
 
 function showBuyModal() {
+  renderModalItems();
   $('.modal').removeClass('hidden');
   $('.js-btn-cart').removeClass('hidden');
   $('.js-shopping-cart').addClass('hidden');
   $('.js-btn-close').addClass('hidden');
+}
+
+function renderModalItems(){
+  var items = [];
+  for(var key in order){
+    var item = renderModalItem(order, key);
+    items.push(item);
+  }
+  var total = calculateModalTotal(order);
+  $('.modal ul').html(items.join(''));
+  $('.modal footer span').html(`Total: $${total}`);
+}
+
+function renderModalItem(order, key){
+  var selected = getSelectedKitty(key);
+  if(!selected) return;
+  return `<li>
+    <span>${order[key]} x ${selected.name}</span>
+    <span>$${selected.price}</span>
+  </li>`;
+}
+
+function calculateModalTotal(order){
+  var total = 0;
+  for(var key in order){
+    var kitty = getSelectedKitty(key);
+    total += order[key] * kitty.price;
+  }
+  return total;
 }
 
 function closeBuyModal(e){
@@ -171,7 +202,15 @@ function closeBuyModal(e){
 }
 
 function checkoutOrder(e){
-  console.log('checkout');
+  var items = [];
+  for(var key in order){
+    var kitty = getSelectedKitty(key);
+    items.push({
+      kitty,
+      count: order[key]
+    })
+  }
+  console.log('checkout', items);
 }
 
 function initListeners() {
