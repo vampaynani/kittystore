@@ -165,18 +165,18 @@ function KittyFactory(){
 
   var kittyObjects = [];
   for(var i = 0; i < kitties.length; i++){
-    kittyObjects.push(new Kitty(kitties[i]));
+    kittyObjects.push(Object.assign({}, new Kitty(kitties[i]), new PetRenderer()));
   }
 
   return {
-    kitties: kittyObjects,
+    _kitties: kittyObjects,
     getAll: function(){
-      return this.kitties;
+      return this._kitties;
     },
     getSelectedKitty: function(key){
-      for(var i = 0; i < this.kitties.length; i++){
-        if(this.kitties[i].id === key){
-          return this.kitties[i];
+      for(var i = 0; i < this._kitties.length; i++){
+        if(this._kitties[i].id === key){
+          return this._kitties[i];
         }
       }
       return;
@@ -212,6 +212,9 @@ function Kitty(rawObject){
   this.getSubtotal = function(){
     return this.count * this.price;
   };
+}
+
+function PetRenderer(){
   this.renderAsListItem = function(){
     return HTMLRenderer.renderKittyItem(this)
   };
@@ -265,7 +268,7 @@ const Page = {
   renderItems: function(items) {
     var renderedItems = [];
     for (var i = 0; i < items.length; i++) {
-      renderedItems.push(items[i].renderAsListItem(items[i]));
+      renderedItems.push(items[i].renderAsListItem());
     }
     $('.js-gallery-list').html(renderedItems.join(''));
   },
