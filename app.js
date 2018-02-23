@@ -14,20 +14,10 @@ function CartFactory(kitties){
     item.add(1);
   }
   const calculateCartTotal = () => {
-    var total = 0;
-    for(var key in order){
-      var kitty = order[key];
-      total += kitty.getSubtotal();
-    }
-    return total;
+    return Object.values(order).reduce((sum, kitty) => sum + kitty.getSubtotal(), 0);
   }
   const renderShoppingCartItems = () => {
-    var items = [];
-    for(var key in order){
-      var kitty = order[key];
-      var item = kitty.renderAsCartItem();
-      items.push(item);
-    }
+    let items = Object.values(order).map(kitty => kitty.renderAsCartItem());
     var total = calculateCartTotal();
     items.push(HTMLRenderer.renderCartTotal(total));
     items.push(HTMLRenderer.renderCartButton());
@@ -62,11 +52,7 @@ function CartFactory(kitties){
       $('.js-btn-close').addClass('hidden');
     },
     checkoutOrder: function(e){
-      var items = [];
-      for(var key in order){
-        var kitty = order[key];
-        items.push(kitty.orderRepresentation());
-      }
+      var items = Object.values(order).map(kitty => kitty.orderRepresentation());
       console.log('checkout', items);
     },
     getOrder: function(){
@@ -77,21 +63,11 @@ function CartFactory(kitties){
 
 function ModalFactory(cart){
   const calculateModalTotal = order => {
-    var total = 0;
-    for(var key in order){
-      var kitty = order[key];
-      total += kitty.getSubtotal();
-    }
-    return total;
+    return Object.values(order).reduce((sum, kitty) => sum + kitty.getSubtotal(), 0);
   }
   const renderModalItems = () => {
     var order = cart.getOrder();
-    var items = [];
-    for(var key in order){
-      var kitty = order[key];
-      var item = kitty.renderAsModalItem();
-      items.push(item);
-    }
+    var items = Object.values(order).map(kitty => kitty.renderAsModalItem());
     var total = calculateModalTotal(order);
     $('.modal ul').html(items.join(''));
     $('.modal footer span').html(`Total: $${total}`);
@@ -162,24 +138,13 @@ function KittyFactory(){
       price: 250
     }
   ];
-
-  var kittyObjects = [];
-  for(var i = 0; i < kitties.length; i++){
-    kittyObjects.push(new Kitty(kitties[i]));
-  }
-
   return {
-    kitties: kittyObjects,
+    _kitties: kitties.map(kitty => new Kitty(kitty)),
     getAll: function(){
-      return this.kitties;
+      return this._kitties;
     },
     getSelectedKitty: function(key){
-      for(var i = 0; i < this.kitties.length; i++){
-        if(this.kitties[i].id === key){
-          return this.kitties[i];
-        }
-      }
-      return;
+      return this._kitties.filter(kitty => kitty.id === key)[0];
     }
   }
 }
@@ -263,10 +228,7 @@ const HTMLRenderer = {
 
 const Page = {
   renderItems: function(items) {
-    var renderedItems = [];
-    for (var i = 0; i < items.length; i++) {
-      renderedItems.push(items[i].renderAsListItem(items[i]));
-    }
+    var renderedItems = items.map(item => item.renderAsListItem());
     $('.js-gallery-list').html(renderedItems.join(''));
   },
   initListeners: function(cart, modal) {
