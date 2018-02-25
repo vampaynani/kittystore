@@ -75,6 +75,56 @@ function Kitty (item) {
   this.subtotal = function(){
     return this.price * this.count;
   }
+  this.add = function(){
+    return this.count += 1;
+  }
+  this.remove = function () {
+    return this.count -= 1;
+  }
 };
+/*
+Ahora, como también necesitamos un carrito deberíamos hacer su factory, la cosa, es que este factory depende de los datos del gatito. Pues todos sus metodos son correspecto a los items que se agregan o no.*/
+function CartFactory (items){
+  this.order = [];
+  this.addItem = function(id){
+    // console.log(this.order);
+    var itemSelected = items.filter(item => item.id === id);
+    //Esto filtra al gatito por id
+    var itemAdded = this.order.filter((ko) => {return ko.id == id});
+    if(itemAdded.length >= 1){
+      console.log(this, this.order);
+      this.order.map(function(i){
+        if(i.id === itemSelected[0].id){
+          itemSelected[0].add();
+        }
+      });
+    }else{
+      //Si es la primera vez que se selecciona un gatito entonces se agrega al carrito
+      itemSelected[0].add();
+      this.order.push(itemSelected[0]);
+    }
+  };
+  this.removeItem = function(){
+    item.remove();
+    item.subtotal -= item.subtotal();
+  };
+};
+function render(items) {
+  for (var i = 0; i < items.length; i++) {
+    var kitty = items[i];
+    $('.js-gallery-list').append(`
+    <li class="kitty ${kitty.id}">
+      <h3 class="title">${kitty.name}</h3>
+      <img src="https://www.cryptokitties.co/images/${kitty.thumbnail}"/>
+      <p>$${kitty.price}</p>
+    </li>
+    `);
+  }
+}
 const Kitties = itemFactory();
-console.log(Kitties);
+const Cart = new CartFactory(Kitties);
+render(Kitties);
+$('.js-gallery-list').on('click', '.kitty', function () {
+  var id = $(this).attr('class').split(' ')[1];
+  Cart.addItem(id);
+});
