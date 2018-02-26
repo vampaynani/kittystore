@@ -112,6 +112,10 @@ function CartFactory (items){
 function render(items) {
   for (var i = 0; i < items.length; i++) {
     var kitty = items[i];
+
+function render() {
+  for (var i = 0; i < kitties.length; i++) {
+    var kitty = kitties[i];
     $('.js-gallery-list').append(`
     <li class="kitty ${kitty.id}">
       <h3 class="title">${kitty.name}</h3>
