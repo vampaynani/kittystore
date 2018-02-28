@@ -8,6 +8,22 @@
 */
 /*CAT FACTORY*/
 
+// function kitties1(id, name, thumbnail, price){
+  // kitties = new kitty.ConstructForKitty(count, totalPrice);
+  // this.count = count;
+  // this.totalPrice = tPrice;
+
+  // const unique = [];
+
+  // function addUnique(){
+    
+  // }
+// }
+
+
+
+
+
 function itemFactory (){
   // haremos una copia de los objetos en kitties con otras propiedades, así no modificamos la data original. https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Object/assign
   var kitties = [
